@@ -1,4 +1,3 @@
-pinyin-to-ukrainian.js
 // ==UserScript==
 // @name         Pinyin to Ukrainian (Wiki Academic System)
 // @namespace    http://tampermonkey.net/
