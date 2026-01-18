@@ -124,8 +124,8 @@
                 /* Use inline-grid to size container to the widest text (original vs new) */
                 #inline-translation-highlight, .inline-translation-highlight {
                     display: inline-grid !important;
-                    vertical-align: baseline !important; /* FIXED: Aligns text correctly */
-                    text-decoration: none !important; /* Ensure no underlines from us */
+                    vertical-align: baseline !important;
+                    text-decoration: none !important;
                 }
 
                 /* Hide original text visually, but keep it in the DOM for logic */
@@ -142,7 +142,11 @@
                     pointer-events: none;
                     text-align: center;
                     white-space: nowrap;
-                    color: #202124;
+                    
+                    /* FIX: Inherit color from Toucan's container instead of forcing dark grey */
+                    color: inherit !important; 
+                    font-weight: inherit !important;
+                    font-style: inherit !important;
                 }
             `;
             shadow.appendChild(style);
@@ -150,7 +154,8 @@
 
         const translateToucanContent = () => {
             const textContainer = shadow.getElementById('inline-translation-highlight') ||
-                                  shadow.querySelector('.tou-body');
+                                  shadow.querySelector('.tou-body') ||
+                                  shadow.querySelector('.inline-translation-highlight');
 
             if (textContainer && textContainer.innerText) {
                 const originalText = textContainer.innerText.trim();
@@ -164,7 +169,7 @@
                         textContainer.setAttribute('data-ukr', translatedText);
                         textContainer.setAttribute('data-ukr-source', originalText);
 
-                        // NEW: Set title for native browser tooltip (Alt Text) on hover
+                        // Set title for native browser tooltip (Alt Text) on hover
                         textContainer.title = originalText;
 
                         injectStyles();
